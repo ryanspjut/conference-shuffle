@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Conference Talk or Song</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      padding: 20px;
+    }
+    .title {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .speaker {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 5px;
+    }
+    .session {
+      font-size: 16px;
+      color: #888;
+      margin-bottom: 30px;
+    }
+    .button {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #2d6cdf;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title" id="title">Loading...</div>
+  <div class="speaker" id="speaker"></div>
+  <div class="session" id="session"></div>
+  <button class="button" onclick="goToTalk()">Go Now</button>
+
+  <script>
+    const talks = [
+      {
+        title: "By This All Will Know That You Are My Disciples",
+        speaker: "Elder Dieter F. Uchtdorf",
+        session: "April 2025 - Sunday Morning Session",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/2025/04/27uchtdorf?lang=eng"
+      },
+      {
+        title: "And We Talk of Christ",
+        speaker: "Elder Gary E. Stevenson",
+        session: "April 2025 - Sunday Afternoon Session",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/2025/04/31stevenson?lang=eng"
+      },
+      {
+        title: "In the Space of Not Many Years",
+        speaker: "Elder David A. Bednar",
+        session: "October 2024 - Sunday Afternoon Session",
+        url: "https://www.churchofjesuschrist.org/study/general-conference/2024/10/35bednar?lang=eng"
+      },
+      {
+        title: "With Songs of Praise",
+        speaker: "Tabernacle Choir at Temple Square",
+        session: "April 2025 - Saturday Morning Session (Music)",
+        url: "https://www.churchofjesuschrist.org/media/music/songs/2025-04-with-songs-of-praise?lang=eng"
+      },
+      {
+        title: "Were You There?",
+        speaker: "BYU Combined Choir",
+        session: "April 2025 - Saturday Evening Session (Music)",
+        url: "https://www.churchofjesuschrist.org/study/music/music-from-april-2025-general-conference/2025-04-were-you-there?lang=eng"
+      },
+      {
+        title: "I Will Walk with Jesus",
+        speaker: "Missionary Choir - Utah Area",
+        session: "October 2024 - Saturday Evening Session (Music)",
+        url: "https://www.churchofjesuschrist.org/media/music/songs/2024-10-i-will-walk-with-jesus?lang=eng"
+      }
+    ];
+
+    const randomTalk = talks[Math.floor(Math.random() * talks.length)];
+
+    document.getElementById('title').textContent = randomTalk.title;
+    document.getElementById('speaker').textContent = randomTalk.speaker;
+    document.getElementById('session').textContent = randomTalk.session;
+
+    function goToTalk() {
+      window.location.href = randomTalk.url;
+    }
+
+    // Optional: Auto-redirect after 5 seconds
+    setTimeout(goToTalk, 5000);
+  </script>
+
+</body>
+</html>
