@@ -422,12 +422,26 @@
         
     ];
 
-    const randomTalk = talks[Math.floor(Math.random() * talks.length)];
+    
+  function playRandomTalk() {
+  const randomTalk = talks[Math.floor(Math.random() * talks.length)];
 
-    document.getElementById("title").textContent = randomTalk.title;
-    document.getElementById("speaker").textContent = randomTalk.speaker;
-    document.getElementById("session").textContent = randomTalk.session;
-    document.getElementById("audio").src = randomTalk.mp3;
+  document.getElementById("title").textContent = randomTalk.title;
+  document.getElementById("speaker").textContent = randomTalk.speaker;
+  document.getElementById("session").textContent = randomTalk.session;
+
+  const audio = document.getElementById("audio");
+  audio.src = randomTalk.mp3;
+  audio.load();
+  audio.play();
+}
+
+// Play a talk right away
+playRandomTalk();
+
+// Auto-advance to the next talk when current one ends
+document.getElementById("audio").addEventListener("ended", playRandomTalk);
+  
   </script>
 
 </body>
