@@ -53,7 +53,9 @@
   <button id="skipBtn">⏭️ Skip</button>
   <br><br>
   <input type="range" id="seekBar" value="0" min="0" max="100" style="width: 300px;" />
+  <div id="timeLeft" style="margin-top: 10px; font-size: 14px; color: #555;">⏱️ Time Left: --:--</div>
 </div>
+
 
 <audio id="audio" preload="metadata"></audio>
 
@@ -463,12 +465,26 @@
   skipBtn.onclick = () => playRandomTalk();
 
   // Update seek bar as audio plays
-  audio.ontimeupdate = () => {
-    if (audio.duration) {
-      seekBar.value = (audio.currentTime / audio.duration) * 100;
-    }
-  };
+audio.ontimeupdate = () => {
+  if (audio.duration) {
+    seekBar.value = (audio.currentTime / audio.duration) * 100;
 
+    const timeLeftDisplay = document.getElementById("timeLeft");
+    const remaining = audio.duration - audio.currentTime;
+    if (!isNaN(remaining)) {
+      const minutes = Math.floor(remaining / 60);
+      const seconds = Math.floor(remaining % 60).toString().padStart(2, "0");
+      timeLeftDisplay.textContent = `⏱️ Time Left: ${minutes}:${seconds}`;
+    }
+  }
+};
+
+
+
+
+
+
+    
   // Seek on user drag
   seekBar.oninput = () => {
     if (audio.duration) {
