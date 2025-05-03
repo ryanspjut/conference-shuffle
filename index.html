@@ -276,7 +276,7 @@
         conference: "Apr 2025",
         session: "Sunday Afternoon Session",
         mp3: "https://assets.churchofjesuschrist.org/ubkg5a8qc97oqsw2whdim5ohgf02cqzqb1z15zft-128k-en.mp3?download=true"
-      }
+      },
 {
         title: "Close as a Quiet Prayer",
         speaker: "Close as a Quiet Prayer",
@@ -424,10 +424,10 @@
 
     const randomTalk = talks[Math.floor(Math.random() * talks.length)];
 
-    document.getElementById(title).textContent = randomTalk.title;
-    document.getElementById(speaker).textContent = randomTalk.speaker;
-    document.getElementById(session).textContent = randomTalk.session;
-    document.getElementById(audio).src = randomTalk.mp3;
+    document.getElementById("title").textContent = randomTalk.title;
+    document.getElementById("speaker").textContent = randomTalk.speaker;
+    document.getElementById("session").textContent = randomTalk.session;
+    document.getElementById("audio").src = randomTalk.mp3;
   </script>
 
 </body>
