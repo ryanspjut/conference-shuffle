@@ -820,6 +820,7 @@
     document.getElementById('title').textContent = randomTalk.title;
     document.getElementById('speaker').textContent = randomTalk.speaker;
     document.getElementById('session').textContent = randomTalk.session;
+    document.getElementById('conference').textContent = randomTalk.conference;
 
     if ("mediaSession" in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
