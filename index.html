@@ -47,7 +47,16 @@
   <div class=title id=title>Loading...</div>
   <div class=speaker id=speaker></div>
   <div class=session id=session></div>
-  <audio id=audio controls autoplay></audio>
+  <div id="custom-player">
+  <button id="playBtn">▶️ Play</button>
+  <button id="pauseBtn">⏸️ Pause</button>
+  <button id="skipBtn">⏭️ Skip</button>
+  <br><br>
+  <input type="range" id="seekBar" value="0" min="0" max="100" style="width: 300px;" />
+</div>
+
+<audio id="audio" preload="metadata"></audio>
+
   <br />
   <button onclick=location.reload()>Play Another</button>
 
@@ -424,25 +433,49 @@
 
     
   function playRandomTalk() {
-  const randomTalk = talks[Math.floor(Math.random() * talks.length)];
+    const randomTalk = talks[Math.floor(Math.random() * talks.length)];
 
-  document.getElementById("title").textContent = randomTalk.title;
-  document.getElementById("speaker").textContent = randomTalk.speaker;
-  document.getElementById("session").textContent = randomTalk.session;
+    document.getElementById("title").textContent = randomTalk.title;
+    document.getElementById("speaker").textContent = randomTalk.speaker;
+    document.getElementById("session").textContent = randomTalk.session;
 
+    const audio = document.getElementById("audio");
+    audio.src = randomTalk.mp3;
+    audio.load();
+    audio.play();
+  }
+
+  // Start with a random talk
+  playRandomTalk();
+
+  // Auto-advance to next when current talk finishes
+  document.getElementById("audio").addEventListener("ended", playRandomTalk);
+
+  // --- Enhanced Player Controls ---
   const audio = document.getElementById("audio");
-  audio.src = randomTalk.mp3;
-  audio.load();
-  audio.play();
-}
+  const playBtn = document.getElementById("playBtn");
+  const pauseBtn = document.getElementById("pauseBtn");
+  const skipBtn = document.getElementById("skipBtn");
+  const seekBar = document.getElementById("seekBar");
 
-// Play a talk right away
-playRandomTalk();
+  playBtn.onclick = () => audio.play();
+  pauseBtn.onclick = () => audio.pause();
+  skipBtn.onclick = () => playRandomTalk();
 
-// Auto-advance to the next talk when current one ends
-document.getElementById("audio").addEventListener("ended", playRandomTalk);
-  
-  </script>
+  // Update seek bar as audio plays
+  audio.ontimeupdate = () => {
+    if (audio.duration) {
+      seekBar.value = (audio.currentTime / audio.duration) * 100;
+    }
+  };
+
+  // Seek on user drag
+  seekBar.oninput = () => {
+    if (audio.duration) {
+      audio.currentTime = (seekBar.value / 100) * audio.duration;
+    }
+  };
+</script>
 
 </body>
 </html>
