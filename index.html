@@ -89,16 +89,19 @@
       <!-- populated in JS -->
     </select>
   </div>
+
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <label for="typeSelect" style="margin-left: 15px;">Type:</label>
+    <select id="typeSelect">
+      <option value="">All</option>
+      <option value="talk">Talks Only</option>
+      <option value="music">Music Only</option>
+    </select>
 </div>
 
 
 
-<label for="typeSelect" style="margin-left: 15px;">Type:</label>
-<select id="typeSelect">
-  <option value="">All</option>
-  <option value="talk">Talks Only</option>
-  <option value="music">Music Only</option>
-</select>
+
 
 
 <audio id='audio' preload='metadata'></audio>
