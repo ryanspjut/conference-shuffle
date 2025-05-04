@@ -59,24 +59,38 @@
   <div id='timeLeft' style='margin-top: 10px; font-size: 14px; color: #555;'>⏱️ Time Left: --:--</div>
 </div>
 
-  <div id="filters" style="margin-bottom: 20px;">
-  <label for="speakerSelect">Speaker:</label>
-  <select id="speakerSelect">
-    <option value="">All</option>
-  </select>
+<div id="filters" style="margin-bottom: 20px; display: flex; flex-direction: column; align-items: flex-start; gap: 10px;">
+  <div>
+    <label for="speakerSelect">Speaker:</label><br />
+    <select id="speakerSelect">
+      <option value="">All</option>
+    </select>
+  </div>
 
-<label for="yearSelect" style="margin-left: 15px;">Year:</label>
-<select id="yearSelect" multiple size="4" style="vertical-align: top;">
-  <!-- options will be populated dynamically -->
-</select>
+  <div>
+    <label for="conferenceSelect">Conference:</label><br />
+    <select id="conferenceSelect">
+      <option value="">All</option>
+    </select>
+  </div>
 
-    
-    
-  <label for="conferenceSelect" style="margin-left: 15px;">Conference:</label>
-  <select id="conferenceSelect">
-    <option value="">All</option>
-  </select>
+  <div>
+    <label for="typeSelect">Type:</label><br />
+    <select id="typeSelect">
+      <option value="">All</option>
+      <option value="talk">Talks Only</option>
+      <option value="music">Music Only</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="yearSelect">Year:</label><br />
+    <select id="yearSelect" multiple size="4" style="width: 100%;">
+      <!-- Populated dynamically -->
+    </select>
+  </div>
 </div>
+
 
 <label for="typeSelect" style="margin-left: 15px;">Type:</label>
 <select id="typeSelect">
