@@ -53,6 +53,7 @@
   <button id='playBtn'>▶️</button>
   <button id='pauseBtn'>⏸️</button>
   <button id='skipBtn'>⏭️</button>
+  <button id="speedBtn">1.0x</button>
   <br><br>
   <input type='range' id='seekBar' value='0' min='0' max='100' style='width: 300px;' />
   <div id='timeLeft' style='margin-top: 10px; font-size: 14px; color: #555;'>⏱️ Time Left: --:--</div>
@@ -865,6 +866,18 @@
   const skipBtn = document.getElementById('skipBtn');
   const seekBar = document.getElementById('seekBar');
   const backBtn = document.getElementById('backBtn');
+
+const speedBtn = document.getElementById("speedBtn");
+const speedOptions = [1.0, 1.25, 1.5, 2.0];
+let currentSpeedIndex = 0;
+
+speedBtn.onclick = () => {
+  currentSpeedIndex = (currentSpeedIndex + 1) % speedOptions.length;
+  const newSpeed = speedOptions[currentSpeedIndex];
+  audio.playbackRate = newSpeed;
+  speedBtn.textContent = `${newSpeed.toFixed(2)}x`;
+};
+
 
 
   playBtn.onclick = () => audio.play();
