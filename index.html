@@ -113,10 +113,10 @@
 let talks = [];
 
 Promise.all([
-  fetch('2023 Oct.json').then(res => res.json()),
-  fetch('2024 Apr.json').then(res => res.json()),
-  fetch('2024 Oct.json').then(res => res.json()),
-  fetch('2025 Oct.json').then(res => res.json())
+  fetch('2023-Oct.json').then(res => res.json()),
+  fetch('2024-Apr.json').then(res => res.json()),
+  fetch('2024-Oct.json').then(res => res.json()),
+  fetch('2025-Oct.json').then(res => res.json())
 ]).then(allData => {
   talks = allData.flat();
 
