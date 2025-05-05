@@ -120,31 +120,51 @@ Promise.all([
 ]).then(allData => {
   talks = allData.flat();
 
-  const yearSet = new Set();
-  talks.forEach(talk => {
-    const match = talk.conference.match(/\d{4}$/);
-    if (match) yearSet.add(match[0]);
-  });
-  const yearSelect = document.getElementById('yearSelect');
-  [...yearSet].sort().forEach(year => {
-    const option = document.createElement('option');
-    option.value = year;
-    option.textContent = year;
-    yearSelect.appendChild(option);
-  });
-
   const speakerSelect = document.getElementById('speakerSelect');
   const conferenceSelect = document.getElementById('conferenceSelect');
   const typeSelect = document.getElementById('typeSelect');
+  const yearSelect = document.getElementById('yearSelect');
 
-  const conferenceSet = new Set();
-  talks.forEach(talk => conferenceSet.add(talk.conference));
-  [...conferenceSet].sort().forEach(conf => {
-    const option = document.createElement('option');
-    option.value = conf;
-    option.textContent = conf;
-    conferenceSelect.appendChild(option);
-  });
+  function updateFilterOptions() {
+    const selectedSpeaker = speakerSelect.value;
+    const selectedConf = conferenceSelect.value;
+    const selectedType = typeSelect.value;
+    const selectedYears = Array.from(yearSelect.selectedOptions).map(opt => opt.value);
+
+    const filtered = talks.filter(talk => {
+      return (selectedSpeaker === '' || talk.speaker === selectedSpeaker) &&
+             (selectedConf === '' || talk.conference === selectedConf) &&
+             (selectedType === '' || talk.type === selectedType) &&
+             (selectedYears.length === 0 || selectedYears.some(year => talk.conference.includes(year)));
+    });
+
+    const confSet = new Set();
+    const yearSet = new Set();
+    const typeSet = new Set();
+
+    filtered.forEach(talk => {
+      confSet.add(talk.conference);
+      const match = talk.conference.match(/\d{4}$/);
+      if (match) yearSet.add(match[0]);
+      typeSet.add(talk.type);
+    });
+
+    conferenceSelect.innerHTML = '<option value="">All</option>';
+    [...confSet].sort().forEach(conf => {
+      const option = document.createElement('option');
+      option.value = conf;
+      option.textContent = conf;
+      conferenceSelect.appendChild(option);
+    });
+
+    yearSelect.innerHTML = '';
+    [...yearSet].sort().forEach(year => {
+      const option = document.createElement('option');
+      option.value = year;
+      option.textContent = year;
+      yearSelect.appendChild(option);
+    });
+  }
 
   const audio = document.getElementById('audio');
   const playBtn = document.getElementById('playBtn');
@@ -165,11 +185,10 @@ Promise.all([
     const selectedYears = Array.from(yearSelect.selectedOptions).map(opt => opt.value);
 
     const filteredTalks = talks.filter(talk => {
-      const speakerMatch = selectedSpeaker === '' || talk.speaker === selectedSpeaker;
-      const confMatch = selectedConf === '' || talk.conference === selectedConf;
-      const typeMatch = selectedType === '' || talk.type === selectedType;
-      const yearMatch = selectedYears.length === 0 || selectedYears.some(year => talk.conference.includes(year));
-      return speakerMatch && confMatch && typeMatch && yearMatch;
+      return (selectedSpeaker === '' || talk.speaker === selectedSpeaker) &&
+             (selectedConf === '' || talk.conference === selectedConf) &&
+             (selectedType === '' || talk.type === selectedType) &&
+             (selectedYears.length === 0 || selectedYears.some(year => talk.conference.includes(year)));
     });
 
     if (filteredTalks.length === 0) {
@@ -236,10 +255,26 @@ Promise.all([
       audio.currentTime = (seekBar.value / 100) * audio.duration;
     }
   };
-  speakerSelect.onchange = playRandomTalk;
-  conferenceSelect.onchange = playRandomTalk;
-  typeSelect.onchange = playRandomTalk;
-  yearSelect.onchange = playRandomTalk;
+
+  speakerSelect.onchange = () => {
+    updateFilterOptions();
+    playRandomTalk();
+  };
+  conferenceSelect.onchange = () => {
+    updateFilterOptions();
+    playRandomTalk();
+  };
+  typeSelect.onchange = () => {
+    updateFilterOptions();
+    playRandomTalk();
+  };
+  yearSelect.onchange = () => {
+    updateFilterOptions();
+    playRandomTalk();
+  };
+
+  updateFilterOptions();
+
 }).catch(err => {
   console.error("Error loading talk data:", err);
   document.getElementById('title').textContent = "Failed to load talks.";
