@@ -113,6 +113,7 @@
 let talks = [];
 
 Promise.all([
+  fetch('2021-Oct.json').then(res => res.json()),
   fetch('2022-Apr.json').then(res => res.json()),
   fetch('2022-Oct.json').then(res => res.json()),
   fetch('2023-Apr.json').then(res => res.json()),
